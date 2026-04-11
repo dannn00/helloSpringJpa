@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>카테고리 등록 - Product Management</title>
+    <style>
+        body { font-family: 'Malgun Gothic', Arial, sans-serif; max-width: 600px; margin: 40px auto; padding: 0 20px; color: #333; }
+        h1 { border-bottom: 2px solid #4a90d9; padding-bottom: 10px; color: #2c3e50; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; margin-bottom: 6px; font-weight: bold; }
+        .form-group input[type="text"] { width: 100%; padding: 8px 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 1em; box-sizing: border-box; }
+        .error-msg { color: red; font-size: 0.9em; margin-top: 4px; display: block; }
+        .btn { padding: 8px 20px; background: #4a90d9; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 1em; }
+        .btn:hover { background: #357abd; }
+        .btn-back { display: inline-block; margin-right: 10px; padding: 8px 16px; background: #aaa; color: white; text-decoration: none; border-radius: 4px; }
+        .btn-back:hover { background: #888; }
+        footer { margin-top: 40px; padding: 14px 20px; background: #f0f4fa; border-top: 2px solid #4a90d9; text-align: center; color: #555; font-size: 0.95em; border-radius: 4px; }
+        footer p { margin: 0; }
+    </style>
+</head>
+<body>
+
+<h1>카테고리 등록</h1>
+
+<form th:action="@{/categories/create}" th:object="${categoryForm}" method="post">
+    <div class="form-group">
+        <label th:for="*{name}">카테고리 이름</label>
+        <input type="text" th:field="*{name}" placeholder="카테고리 이름"/>
+        <span th:errors="*{name}" class="error-msg"></span>
+    </div>
+    <a class="btn-back" th:href="@{/categories}">← 목록으로</a>
+    <button type="submit" class="btn">등록</button>
+</form>
+
+<footer>
+    <p th:text="${'실습 수행 일시: ' + #temporals.format(#temporals.createNow(), 'yyyy년 MM월 dd일 HH:mm:ss') + ' 학번: 2371329 성명: 김다은'}"></p>
+</footer>
+
+</body>
+</html>
