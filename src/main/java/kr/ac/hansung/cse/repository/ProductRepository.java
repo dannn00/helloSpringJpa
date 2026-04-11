@@ -41,6 +41,8 @@ import java.util.Optional;
 @Repository
 public class ProductRepository {
 
+
+
     /**
      * @PersistenceContext : Spring이 EntityManager를 주입해 주는 어노테이션입니다.
      *
@@ -52,6 +54,22 @@ public class ProductRepository {
      */
     @PersistenceContext
     private EntityManager entityManager;
+
+    public List<Product> findByNameContaining(String keyword) {
+        return entityManager.createQuery(
+                        "SELECT p FROM Product p LEFT JOIN FETCH p.category WHERE p.name LIKE :keyword",
+                        Product.class)
+                .setParameter("keyword", "%" + keyword + "%")
+                .getResultList();
+    }
+
+    public List<Product> findByCategoryId(Long categoryId) {
+        return entityManager.createQuery(
+                        "SELECT p FROM Product p LEFT JOIN FETCH p.category WHERE p.category.id = :cid",
+                        Product.class)
+                .setParameter("cid", categoryId)
+                .getResultList();
+    }
 
     /**
      * 모든 상품 목록 조회

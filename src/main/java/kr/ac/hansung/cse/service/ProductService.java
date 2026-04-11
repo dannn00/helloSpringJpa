@@ -61,6 +61,13 @@ public class ProductService {
         this.categoryRepository = categoryRepository;
     }
 
+    public List<Product> searchByName(String keyword) {
+        return productRepository.findByNameContaining(keyword);
+    }
+
+    public List<Product> searchByCategory(Long categoryId) {
+        return productRepository.findByCategoryId(categoryId);
+    }
     /**
      * 카테고리 이름(String) → Category 엔티티 변환
      * 폼에서 받은 카테고리 이름을 DB에서 조회하여 엔티티로 변환합니다.

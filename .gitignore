@@ -29,3 +29,7 @@ Thumbs.db        # Windows
 target/
 mysql-data/
 .idea/
+target/
+mysql-data/
+target/
+mysql-data/

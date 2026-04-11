@@ -28,6 +28,32 @@ public class CategoryController {
         model.addAttribute("categoryForm", new CategoryForm());
         return "categoryForm"; }
 
+    @PostMapping("/create")
+    public String createCategory(
+            @Valid @ModelAttribute CategoryForm categoryForm,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) return "categoryForm"; // 검증 실패
+        try {
+            categoryService.createCategory(categoryForm.getName());
+            redirectAttributes.addFlashAttribute("successMessage", "등록 완료");
+        } catch (DuplicateCategoryException e) {
+
+            bindingResult.rejectValue("name", "duplicate", e.getMessage());
+            return "categoryForm"; }
+        return "redirect:/categories";
+    }
+
+    @PostMapping("/{id}/delete")
+    public String deleteCategory(@PathVariable Long id,
+                                 RedirectAttributes redirectAttributes) {
+        try {
+            categoryService.deleteCategory(id);
+            redirectAttributes.addFlashAttribute("successMessage", "삭제 완료");
+        } catch (IllegalStateException e) {
+
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+        }  return "redirect:/categories"; }
 
 
 }
