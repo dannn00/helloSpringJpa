@@ -60,7 +60,8 @@ public class ProductRepository {
                         "SELECT p FROM Product p LEFT JOIN FETCH p.category WHERE p.name LIKE :keyword",
                         Product.class)
                 .setParameter("keyword", "%" + keyword + "%")
-                .getResultList();
+                .getResultStream()
+                .toList();
     }
 
     public List<Product> findByCategoryId(Long categoryId) {
